@@ -42,13 +42,13 @@ const Ledger = () => {
   }, []);
 
   useEffect(() => {
-    // make the rest of the calls for the remaining pages
     /*
         @TODO confirm with dev team that pages are sorted in order of date,
         if so, consider adding a pagination UI 
         or additional load on scroll to page bottom
         for cases that have too many entries
     */
+    // make the rest of the calls for the remaining pages
     if (totalCount !== 0) {
       const numPages = Math.ceil(totalCount / transactions.length);
       for (let i = 1; i < numPages; i += 1) {
