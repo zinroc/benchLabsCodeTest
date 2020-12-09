@@ -1,9 +1,9 @@
 import Head from "next/head";
 import styled from "@emotion/styled";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
-import { SET_GREETING } from "../redux/modules/main";
+import { useSelector } from "react-redux";
+
+import Ledger from "../containers/Ledger";
 
 const Header = styled.div`
   background-color: #2f9685;
@@ -26,14 +26,20 @@ const Spacer = styled.div`
   height: ${({ height }) => (height ? height : "0px")};
 `;
 
+const Margin = styled.div`
+  margin-top: ${({ top }) => (top ? top : "0px")};
+  margin-left: ${({ left }) => (left ? left : "0px")};
+  margin-right: ${({ right }) => (right ? right : "0px")};
+  margin-bottom: ${({ bottom }) => (bottom ? bottom : "0px")};
+`;
+
+const Error = styled.div`
+  color: red;
+`;
+
 export default function Home() {
-  const dispatch = useDispatch();
+  const error = useSelector((state) => state.main.error);
 
-  useEffect(() => {
-    dispatch({ type: SET_GREETING, greeting: "Hello World" });
-  }, []);
-
-  const greeting = useSelector((state) => state.main.greeting);
   return (
     <div>
       <Head>
@@ -42,7 +48,10 @@ export default function Home() {
       </Head>
       <Header>Bench Test</Header>
       <Spacer height="125px" />
-      {greeting}
+      <Margin top="25px" left="25px" right="25px" bottom="25px">
+        <Error>{error}</Error>
+        <Ledger />
+      </Margin>
     </div>
   );
 }
