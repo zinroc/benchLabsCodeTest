@@ -1,20 +1,14 @@
 import moment from "moment";
 import { uuid } from "uuidv4";
 
+import dollar from "../../utils/dollar";
+
 export const FETCH_TRANSACTIONS_START = "main/FETCH_TRANSACTIONS_START";
 export const FETCH_TRANSACTIONS_SUCCESS = "main/FETCH_TRANSACTIONS_SUCCESS";
 export const FETCH_TRANSACTIONS_FAILURE = "main/FETCH_TRANSACTIONS_FAILURE";
 
 const initialState = {
-  transactions: [
-    {
-      Date: "11-11-2013",
-      Company: "ABC",
-      Ledger: "EFG",
-      Amount: Number("-100.00").toLocaleString("en-IN").replace("-", "-$"),
-      id: 1,
-    },
-  ],
+  transactions: [],
   sum: 0,
   totalCount: 0,
   error: "",
@@ -55,10 +49,7 @@ export default function reducer(state = initialState, action) {
           ...transactions.map((t) => ({
             ...t,
             id: uuid(),
-            Amount:
-              Number(t.Amount) < 0
-                ? Number(t.Amount).toLocaleString("en-IN").replace("-", "-$")
-                : "$".concat(Number(t.Amount).toLocaleString("en-IN")),
+            Amount: dollar(Number(t.Amount)),
           })),
         ].sort((a, b) => moment(b.Date).diff(a.Date, "days")), // sort to see most recent transactions at top of the list
         totalCount,

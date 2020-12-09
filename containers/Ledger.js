@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import moment from "moment";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,25 +9,10 @@ import {
 
 import { fetchTransactions } from "../api/bench";
 
-const Table = styled.div``;
+import dollar from "../utils/dollar";
 
-const TableRow = styled.div`
-  padding: 25px;
-  background-color: ${({ isHeader }) => (isHeader ? "white" : "#ebebeb")};
-  color: ${({ isHeader }) => (isHeader ? "#2f9685" : "black")};
-  font-weight: ${({ isHeader }) => (isHeader ? "600" : "400")};
-  border: 1px solid #d1d1d1;
-  display: flex;
-  margin-top: -1px;
-  hover {
-    color: #2f9685;
-  }
-`;
-
-const TableRowEntry = styled.div`
-  width: ${({ width }) => width};
-  display: inline-flex;
-`;
+import { Table, TableRow } from "../components/Table";
+import LedgerRow from "../components/LedgerRow";
 
 const Ledger = () => {
   const dispatch = useDispatch();
@@ -59,7 +43,7 @@ const Ledger = () => {
 
   useEffect(() => {
     // make the rest of the calls for the remaining pages
-    // @TODO consider adding a pagination UI for cases that have too many entries
+    // @TODO consider adding a pagination UI for cases that have too many entries or additional load on scroll to page bottom
     if (totalCount !== 0) {
       const numPages = Math.ceil(totalCount / transactions.length);
       for (let i = 1; i < numPages; i += 1) {
@@ -72,23 +56,21 @@ const Ledger = () => {
   return (
     <Table>
       <TableRow isHeader>
-        <TableRowEntry width="10%">Date</TableRowEntry>
-        <TableRowEntry width="40%">Company</TableRowEntry>
-        <TableRowEntry width="40%">Account</TableRowEntry>
-        <TableRowEntry width="10%">
-          {sum < 0
-            ? sum.toLocaleString("en-IN").replace("-", "-$")
-            : "$".concat(sum.toLocaleString("en-IN"))}
-        </TableRowEntry>
+        <LedgerRow
+          date="Date"
+          company="Company"
+          account="Account"
+          amount={dollar(sum)}
+        />
       </TableRow>
       {transactions.map((t) => (
         <TableRow key={t.id}>
-          <TableRowEntry width="10%">
-            {moment(t.Date).format("MMM Do, YYYY")}
-          </TableRowEntry>
-          <TableRowEntry width="40%">{t.Company}</TableRowEntry>
-          <TableRowEntry width="40%">{t.Ledger}</TableRowEntry>
-          <TableRowEntry width="10%">{t.Amount}</TableRowEntry>
+          <LedgerRow
+            date={moment(t.Date).format("MMM Do, YYYY")}
+            company={t.Company}
+            account={t.Ledger}
+            amount={t.Amount}
+          />
         </TableRow>
       ))}
       {loading.length ? "...Loading" : ""}
