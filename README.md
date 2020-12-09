@@ -1,5 +1,7 @@
 ## Getting Started
 
+Requires Node.js version 10.13 or later
+
 install dependencies
 
 npm install
