@@ -52,7 +52,7 @@ export default function reducer(state = initialState, action) {
             Amount: dollar(Number(t.Amount)),
           })),
         ].sort((a, b) => moment(b.Date).diff(a.Date, "days")), // sort to see most recent transactions at top of the list
-        totalCount,
+        totalCount: state.totalCount === 0 ? totalCount : state.totalCount, // @TODO discuss with dev team how to handle edge case where one of the pages comes in with a different total count than the first page.
       };
     }
     case FETCH_TRANSACTIONS_FAILURE: {
