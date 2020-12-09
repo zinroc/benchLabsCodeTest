@@ -2,6 +2,7 @@ import moment from "moment";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  INITIALIZE_LEDGER,
   FETCH_TRANSACTIONS_START,
   FETCH_TRANSACTIONS_SUCCESS,
   FETCH_TRANSACTIONS_FAILURE,
@@ -37,6 +38,7 @@ const Ledger = () => {
   };
 
   useEffect(() => {
+    dispatch({ type: INITIALIZE_LEDGER });
     // make the first call to find out information about the # of more calls that need to be made to get the full list
     fetchTransactionsWrapper({ page: 1 });
   }, []);

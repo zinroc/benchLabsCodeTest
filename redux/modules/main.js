@@ -7,6 +7,8 @@ export const FETCH_TRANSACTIONS_START = "main/FETCH_TRANSACTIONS_START";
 export const FETCH_TRANSACTIONS_SUCCESS = "main/FETCH_TRANSACTIONS_SUCCESS";
 export const FETCH_TRANSACTIONS_FAILURE = "main/FETCH_TRANSACTIONS_FAILURE";
 
+export const INITIALIZE_LEDGER = "main/INITIALIZE_LEDGER";
+
 const initialState = {
   transactions: [],
   sum: 0,
@@ -17,6 +19,9 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case INITIALIZE_LEDGER: {
+      return initialState;
+    }
     case FETCH_TRANSACTIONS_START: {
       return {
         ...state,
