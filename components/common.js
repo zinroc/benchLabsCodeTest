@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
 
+import colors from "../constants/colors";
+
 export const Header = styled.div`
-  background-color: #2f9685;
+  background-color: ${colors.green};
   text-align: center;
   width: 100%;
   color: white;
@@ -12,9 +14,6 @@ export const Header = styled.div`
   justify-content: space-around;
   display: flex;
   padding: 50px;
-  :hover {
-    color: lightblue;
-  }
 `;
 
 export const Spacer = styled.div`
