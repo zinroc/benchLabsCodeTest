@@ -37,6 +37,7 @@ const Ledger = () => {
     }
   };
 
+  // @TODO consider moving data load from the componentDidMount lifecycle hook to .getInitialProps in order to load the data serverside
   useEffect(() => {
     dispatch({ type: INITIALIZE_LEDGER });
     // make the first call to find out information about the # of more calls that need to be made to get the full list
